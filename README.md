@@ -38,6 +38,7 @@ Traffic-Sign-Detector/
 Download the trained model weights file (`best.pt`) from the Google Drive link below:
 
 📥 **[Download best.pt](https://drive.google.com/drive/folders/1FAYX2EP78fVPvhz_D7nkGnJx7zUq53h3?usp=drive_link)**
+    **Dataset Link Used**: [GTSRB on Kaggle](https://www.kaggle.com/datasets/meowmeowmeowmeowmeow/gtsrb-german-traffic-sign)
 
 ---
 
