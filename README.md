@@ -17,63 +17,76 @@ This project demonstrates how to load a custom-trained YOLOv5 model and run infe
 
 ## 📁 Repository Structure
 
+It's recommended to structure your project like this:
 
----
+Traffic-Sign-Detector/
+│
+├── yolov5/                 # Cloned YOLOv5 repository
+│   ├── best.pt             # Trained weights file (you need to add this)
+│   ├── webcam_detect.py    # Webcam inference script (you need to add this)
+│   ├── requirements.txt    # YOLOv5 dependencies
+│   └── ...                 # Other YOLOv5 files and folders
+│
+└── README.md               # This file
 
-## 🧠 Training Details
-
-- **Model**: YOLOv5s
-- **Input Size**: 416x416
-- **Epochs**: 26 (trained incrementally)
-- **Total Images**: ~39,000 (custom dataset)
-- **Environment**: Google Colab (T4 GPU)
-
-Weights are saved to `best.pt`.
+*(Note: You will clone the `yolov5` repository and then add your `best.pt` and `webcam_detect.py` files inside it.)*
 
 ---
 
 ## 🔽 Download Trained Model
 
-Download the trained model weights file (`best.pt`) from this Google Drive link:
+Download the trained model weights file (`best.pt`) from the Google Drive link below:
 
-📥 [Download best.pt](https://drive.google.com/drive/folders/1FAYX2EP78fVPvhz_D7nkGnJx7zUq53h3?usp=drive_link)
-
-Place the file inside the `yolov5/` directory after cloning.
+📥 **[Download best.pt](https://drive.google.com/drive/folders/1FAYX2EP78fVPvhz_D7nkGnJx7zUq53h3?usp=drive_link)**
 
 ---
 
 ## 🚀 Getting Started
 
-### 1. Clone YOLOv5
+### Prerequisites
+
+-   Python 3.8 or later
+-   Pip package manager
+-   A webcam connected to your computer
+
+### Setup Instructions
+
+1.  **Clone the YOLOv5 Repository:**
+    Open your terminal or command prompt and run:
+    ```bash
+    git clone [https://github.com/ultralytics/yolov5.git](https://github.com/ultralytics/yolov5.git)
+    ```
+
+2.  **Navigate into the Directory:**
+    ```bash
+    cd yolov5
+    ```
+
+3.  **Install Dependencies:**
+    Install the required Python packages using the `requirements.txt` file provided by YOLOv5, plus `opencv-python` for webcam access:
+    ```bash
+    pip install -r requirements.txt
+    pip install opencv-python
+    ```
+    *(Optional but recommended: Consider using a Python virtual environment)*
+
+4.  **Add Your Trained Model:**
+    Place the `best.pt` file (which you downloaded earlier) directly inside the `yolov5` directory you just cloned.
+
+5.  **Add the Detection Script:**
+    Create a Python file named `webcam_detect.py` inside the same `yolov5` directory. Paste the Python code for your webcam detection logic into this file.
+
+    *(Make sure your `webcam_detect.py` script correctly loads the `best.pt` model and uses OpenCV to capture and process the webcam feed.)*
+
+---
+
+## 🧪 Run Real-Time Detection
+
+Ensure you are still inside the `yolov5` directory in your terminal. Run the detection script using:
 
 ```bash
-git clone https://github.com/ultralytics/yolov5.git
-cd yolov5
-⚙️ Setup Instructions
-2. Install Dependencies
-Install the required Python packages:
-
-bash
-Copy
-Edit
-pip install -r requirements.txt
-pip install opencv-python
-3. Add Your Model
-Place the best.pt file inside the yolov5 directory.
-
-4. Add the Detection Script
-Inside the same yolov5 directory, create a file named webcam_detect.py. You can find the sample code for this script later in the README.
-
-🧪 Run Real-Time Detection
-Run the detection script using the command below:
-
-bash
-Copy
-Edit
 python webcam_detect.py
-The webcam will open and the model will start detecting traffic signs in real time.
 
-Let me know if you'd like me to regenerate the full README with this updated formatting!
 
 
 
