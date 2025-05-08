@@ -73,7 +73,7 @@ Download the trained model weights file (`best.pt`) from the Google Drive link b
 
 Go back to the root directory (where `app.py` is located), and run the detection script:
 
-````bash
+```bash
 cd ..
 
 **Install Dependencies:**
@@ -86,7 +86,5 @@ cd ..
 
 python app.py
 
-```
 
 ```
-````
