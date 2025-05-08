@@ -64,15 +64,7 @@ Download the trained model weights file (`best.pt`) from the Google Drive link b
    cd yolov5
    ```
 
-3. **Install Dependencies:**
-   Install the required Python packages using the `requirements.txt` file provided by YOLOv5, plus `opencv-python` for webcam access:
-
-   ```bash
-   pip install -r requirements.txt
-   pip install opencv-python
-   ```
-
-4. **Add Your Trained Model:**
+3. **Add Your Trained Model:**
    Place the `best.pt` file (downloaded earlier) inside the `yolov5` directory.
 
 ---
@@ -81,7 +73,18 @@ Download the trained model weights file (`best.pt`) from the Google Drive link b
 
 Go back to the root directory (where `app.py` is located), and run the detection script:
 
-```bash
+````bash
 cd ..
+3. **Install Dependencies:**
+   Install the required Python packages using the `requirements.txt` file provided by YOLOv5, plus `opencv-python` for webcam access:
+
+   ```bash
+   pip install -r requirements.txt
+   pip install opencv-python
+````
+
 python app.py
+
+```
+
 ```
