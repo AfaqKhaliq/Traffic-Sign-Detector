@@ -75,16 +75,18 @@ Go back to the root directory (where `app.py` is located), and run the detection
 
 ````bash
 cd ..
-3. **Install Dependencies:**
+
+**Install Dependencies:**
    Install the required Python packages using the `requirements.txt` file provided by YOLOv5, plus `opencv-python` for webcam access:
 
-   ```bash
+
    pip install -r requirements.txt
    pip install opencv-python
-````
+
 
 python app.py
 
 ```
 
 ```
+````
