@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Live Webcam Detection</title>
+    <style>
+      body {
+        font-family: "Segoe UI", sans-serif;
+        background: #f4f7f9;
+        text-align: center;
+        padding: 40px;
+      }
+
+      h1 {
+        color: #2c3e50;
+      }
+
+      img {
+        border-radius: 15px;
+        border: 6px solid #ecf0f1;
+        margin-top: 20px;
+        max-width: 90%;
+      }
+
+      a {
+        display: inline-block;
+        margin-top: 25px;
+        color: #3498db;
+        text-decoration: none;
+        font-weight: bold;
+      }
+
+      a:hover {
+        text-decoration: underline;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Live Traffic Sign Detection</h1>
+    <img src="{{ url_for('video_feed') }}" width="720" height="540" />
+    <br />
+    <a href="{{ url_for('index') }}">← Back to Image Upload</a>
+  </body>
+</html>
