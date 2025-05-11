@@ -2,85 +2,750 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Traffic Sign Detector</title>
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
+    />
     <style>
+      :root {
+        --primary: #4f46e5;
+        --primary-hover: #4338ca;
+        --secondary: #f97316;
+        --success: #10b981;
+        --error: #ef4444;
+        --text: #1e293b;
+        --text-light: #64748b;
+        --background: #f8fafc;
+        --card: #ffffff;
+        --border: #e2e8f0;
+        --shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1),
+          0 4px 6px -2px rgba(0, 0, 0, 0.05);
+        --radius: 12px;
+      }
+
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
       body {
-        font-family: "Segoe UI", sans-serif;
-        background: #f4f7f9;
+        font-family: "Inter", sans-serif;
+        background: var(--background);
+        color: var(--text);
+        line-height: 1.6;
+        padding: 2rem 1rem;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        min-height: 100vh;
+      }
+
+      .container {
+        width: 100%;
+        max-width: 800px;
+        margin: 0 auto;
+      }
+
+      header {
         text-align: center;
-        padding: 40px;
+        margin-bottom: 2.5rem;
       }
 
       h1 {
-        color: #2c3e50;
+        font-size: 2.5rem;
+        font-weight: 700;
+        color: var(--text);
+        margin-bottom: 0.5rem;
+        background: linear-gradient(to right, var(--primary), var(--secondary));
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+      }
+
+      .subtitle {
+        color: var(--text-light);
+        font-size: 1.1rem;
+        margin-bottom: 1.5rem;
+      }
+
+      .card {
+        background: var(--card);
+        border-radius: var(--radius);
+        box-shadow: var(--shadow);
+        padding: 2.5rem;
+        margin-bottom: 2rem;
+        transition: transform 0.3s ease;
+      }
+
+      .card:hover {
+        transform: translateY(-5px);
       }
 
       form {
-        background: #fff;
-        padding: 30px;
-        border-radius: 15px;
-        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-        display: inline-block;
-        margin-top: 20px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+      }
+
+      .file-input-container {
+        position: relative;
+        width: 100%;
+        margin: 1.5rem 0;
+        text-align: center;
+      }
+
+      .file-input-label {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        border: 2px dashed var(--border);
+        border-radius: var(--radius);
+        padding: 2rem 1rem;
+        cursor: pointer;
+        transition: all 0.3s ease;
+      }
+
+      .file-input-label:hover {
+        border-color: var(--primary);
+        background-color: rgba(79, 70, 229, 0.05);
+      }
+
+      .file-input-label svg {
+        width: 48px;
+        height: 48px;
+        margin-bottom: 1rem;
+        color: var(--primary);
+      }
+
+      .file-input-label span {
+        font-weight: 500;
+      }
+
+      .file-input-label small {
+        color: var(--text-light);
+        margin-top: 0.5rem;
       }
 
       input[type="file"] {
-        padding: 10px;
+        position: absolute;
+        width: 0.1px;
+        height: 0.1px;
+        opacity: 0;
+        overflow: hidden;
+        z-index: -1;
       }
 
-      input[type="submit"] {
-        padding: 10px 20px;
-        background-color: #3498db;
-        border: none;
+      .btn {
+        background-color: var(--primary);
         color: white;
-        border-radius: 8px;
+        border: none;
+        border-radius: var(--radius);
+        padding: 0.75rem 2rem;
+        font-size: 1rem;
+        font-weight: 600;
         cursor: pointer;
-        font-weight: bold;
+        transition: background-color 0.3s ease, transform 0.2s ease;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
       }
 
-      input[type="submit"]:hover {
-        background-color: #2980b9;
+      .btn:hover {
+        background-color: var(--primary-hover);
+        transform: translateY(-2px);
+      }
+
+      .btn:disabled {
+        background-color: var(--text-light);
+        cursor: not-allowed;
+        transform: none;
+      }
+
+      .btn svg {
+        margin-right: 0.5rem;
+        width: 20px;
+        height: 20px;
+      }
+
+      .result-container {
+        width: 100%;
+        margin-top: 2rem;
+      }
+
+      .image-container {
+        width: 100%;
+        border-radius: var(--radius);
+        overflow: hidden;
+        margin-bottom: 1.5rem;
+        position: relative;
       }
 
       img {
-        margin: 20px;
-        max-width: 600px;
-        max-height: 400px;
-        width: auto;
+        width: 100%;
         height: auto;
-        border: 6px solid #ecf0f1;
-        border-radius: 12px;
+        display: block;
+        border-radius: var(--radius);
+        border: 1px solid var(--border);
       }
 
-      a {
+      .result {
+        background: var(--card);
+        border-radius: var(--radius);
+        padding: 1.5rem;
+        box-shadow: var(--shadow);
+        margin-top: 1.5rem;
+        text-align: center;
+      }
+
+      .result h2 {
+        font-size: 1.5rem;
+        margin-bottom: 0.5rem;
+        color: var(--text);
+      }
+
+      .result p {
+        font-size: 1.25rem;
+        font-weight: 600;
+        color: var(--secondary);
+        padding: 0.5rem 1rem;
+        background-color: rgba(249, 115, 22, 0.1);
+        border-radius: 50px;
         display: inline-block;
-        margin-top: 25px;
-        color: #3498db;
-        text-decoration: none;
-        font-weight: bold;
       }
 
-      a:hover {
-        text-decoration: underline;
+      .link {
+        display: inline-flex;
+        align-items: center;
+        color: var(--primary);
+        text-decoration: none;
+        font-weight: 600;
+        margin-top: 1.5rem;
+        transition: color 0.3s ease;
+      }
+
+      .link:hover {
+        color: var(--primary-hover);
+      }
+
+      .link svg {
+        margin-left: 0.5rem;
+        width: 20px;
+        height: 20px;
+      }
+
+      footer {
+        margin-top: 3rem;
+        text-align: center;
+        color: var(--text-light);
+        font-size: 0.9rem;
+      }
+
+      /* Status indicators */
+      .status-indicator {
+        display: none;
+        align-items: center;
+        justify-content: center;
+        margin: 1rem 0;
+        padding: 0.75rem 1.5rem;
+        border-radius: 50px;
+        font-weight: 500;
+        animation: fadeIn 0.3s ease;
+      }
+
+      @keyframes fadeIn {
+        from {
+          opacity: 0;
+          transform: translateY(-10px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      .status-success {
+        background-color: rgba(16, 185, 129, 0.1);
+        color: var(--success);
+      }
+
+      .status-error {
+        background-color: rgba(239, 68, 68, 0.1);
+        color: var(--error);
+      }
+
+      .status-loading {
+        background-color: rgba(79, 70, 229, 0.1);
+        color: var(--primary);
+      }
+
+      .status-indicator svg {
+        width: 20px;
+        height: 20px;
+        margin-right: 0.5rem;
+        display: none;
+      }
+
+      /* Loading spinner */
+      .spinner {
+        display: inline-block;
+        width: 20px;
+        height: 20px;
+        border: 3px solid rgba(79, 70, 229, 0.3);
+        border-radius: 50%;
+        border-top-color: var(--primary);
+        animation: spin 1s ease-in-out infinite;
+        margin-right: 0.5rem;
+      }
+
+      @keyframes spin {
+        to {
+          transform: rotate(360deg);
+        }
+      }
+
+      /* File name display */
+      .file-name {
+        margin-top: 0.75rem;
+        font-size: 0.875rem;
+        color: var(--text-light);
+        word-break: break-all;
+        max-width: 100%;
+      }
+
+      /* Image preview styles */
+      .preview-container {
+        display: none;
+        margin-top: 1.5rem;
+        width: 100%;
+        animation: fadeIn 0.5s ease;
+      }
+
+      .preview-container.active {
+        display: block;
+      }
+
+      .preview-header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin-bottom: 1rem;
+      }
+
+      .preview-title {
+        font-size: 1.1rem;
+        font-weight: 600;
+        color: var(--text);
+        display: flex;
+        align-items: center;
+      }
+
+      .preview-title svg {
+        width: 20px;
+        height: 20px;
+        margin-right: 0.5rem;
+        color: var(--success);
+      }
+
+      .preview-image-container {
+        position: relative;
+        width: 100%;
+        border-radius: var(--radius);
+        overflow: hidden;
+        border: 1px solid var(--border);
+        background-color: #f8f9fa;
+      }
+
+      .preview-image {
+        width: 100%;
+        max-height: 300px;
+        object-fit: contain;
+        display: block;
+      }
+
+      .remove-image {
+        position: absolute;
+        top: 10px;
+        right: 10px;
+        background: rgba(255, 255, 255, 0.8);
+        border-radius: 50%;
+        width: 30px;
+        height: 30px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        transition: all 0.2s ease;
+        border: none;
+        color: var(--error);
+      }
+
+      .remove-image:hover {
+        background: rgba(255, 255, 255, 1);
+        transform: scale(1.1);
+      }
+
+      .remove-image svg {
+        width: 18px;
+        height: 18px;
+      }
+
+      .upload-area-initial {
+        display: flex;
+      }
+
+      .upload-area-with-preview {
+        display: none;
+      }
+
+      @media (max-width: 640px) {
+        .card {
+          padding: 1.5rem;
+        }
+
+        h1 {
+          font-size: 2rem;
+        }
       }
     </style>
   </head>
   <body>
-    <h1>Traffic Sign Detection</h1>
-    <form method="POST" enctype="multipart/form-data">
-      <input type="file" name="image" required /><br /><br />
-      <input type="submit" value="Detect Sign" />
-    </form>
-    {% if uploaded %}
-    <h2>Input Image</h2>
-    <img src="{{ url_for('static', filename='uploads/' ~ input_image) }}" />
-    {% endif %} {% if detected_class %}
-    <h2>Detected Traffic Sign</h2>
-    <p style="font-size: 24px; font-weight: bold; color: #2c3e50">
-      {{ detected_class }}
-    </p>
-    {% endif %}
+    <div class="container">
+      <header>
+        <h1>Traffic Sign Detector</h1>
+        <p class="subtitle">Upload an image to identify traffic signs</p>
+      </header>
 
-    <a href="{{ url_for('webcam') }}">Or use Webcam Detection</a>
+      <div class="card">
+        <form method="POST" enctype="multipart/form-data" id="upload-form">
+          <!-- Initial upload area (shown before image selection) -->
+          <div class="file-input-container" id="upload-area-initial">
+            <label
+              for="image-upload"
+              class="file-input-label"
+              id="upload-label"
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"
+                />
+              </svg>
+              <span>Choose an image</span>
+              <small>or drag and drop it here</small>
+            </label>
+            <input
+              type="file"
+              id="image-upload"
+              name="image"
+              accept="image/*"
+              required
+            />
+          </div>
+
+          <!-- Preview area (shown after image selection) -->
+          <div class="preview-container" id="preview-container">
+            <div class="preview-header">
+              <div class="preview-title">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="M5 13l4 4L19 7"
+                  />
+                </svg>
+                Image Selected
+              </div>
+              <div class="file-name" id="file-name"></div>
+            </div>
+
+            <div class="preview-image-container">
+              <img
+                id="preview-image"
+                class="preview-image"
+                src="#"
+                alt="Selected image preview"
+              />
+              <button
+                type="button"
+                class="remove-image"
+                id="remove-image"
+                title="Remove image"
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="M6 18L18 6M6 6l12 12"
+                  />
+                </svg>
+              </button>
+            </div>
+
+            <div
+              class="status-indicator status-success"
+              style="margin-top: 1rem"
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M5 13l4 4L19 7"
+                />
+              </svg>
+              Image ready for detection
+            </div>
+          </div>
+
+          <div id="status-container"></div>
+
+          <button type="submit" class="btn" id="submit-btn">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"
+              />
+            </svg>
+            Detect Sign
+          </button>
+        </form>
+      </div>
+
+      {% if uploaded %}
+      <div class="result-container">
+        <h2>Input Image</h2>
+        <div class="image-container">
+          <img
+            src="{{ url_for('static', filename='uploads/' ~ input_image) }}"
+            alt="Uploaded Traffic Sign"
+          />
+        </div>
+        <div class="status-indicator status-success">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M5 13l4 4L19 7"
+            />
+          </svg>
+          Image uploaded successfully
+        </div>
+      </div>
+      {% endif %} {% if upload_error %}
+      <div class="status-indicator status-error">
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          fill="none"
+          viewBox="0 0 24 24"
+          stroke="currentColor"
+        >
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2"
+            d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
+          />
+        </svg>
+        {{ upload_error }}
+      </div>
+      {% endif %} {% if detected_class %}
+      <div class="result">
+        <h2>Detected Traffic Sign</h2>
+        <p>{{ detected_class }}</p>
+      </div>
+      {% endif %}
+
+      <a href="{{ url_for('webcam') }}" class="link">
+        Or use Live Webcam Detection
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          fill="none"
+          viewBox="0 0 24 24"
+          stroke="currentColor"
+        >
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2"
+            d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z"
+          />
+        </svg>
+      </a>
+    </div>
+
+    <footer>
+      <p>&copy; 2023 Traffic Sign Detector</p>
+    </footer>
+
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        const fileInput = document.getElementById("image-upload");
+        const uploadAreaInitial = document.getElementById(
+          "upload-area-initial"
+        );
+        const previewContainer = document.getElementById("preview-container");
+        const previewImage = document.getElementById("preview-image");
+        const fileName = document.getElementById("file-name");
+        const removeImageBtn = document.getElementById("remove-image");
+        const uploadForm = document.getElementById("upload-form");
+        const submitBtn = document.getElementById("submit-btn");
+        const statusContainer = document.getElementById("status-container");
+
+        // Handle file selection
+        fileInput.addEventListener("change", function (e) {
+          handleFileSelection(e.target.files[0]);
+        });
+
+        function handleFileSelection(file) {
+          if (!file) return;
+
+          // Show file name
+          fileName.textContent = file.name;
+
+          // Show image preview
+          if (file.type.startsWith("image/")) {
+            const reader = new FileReader();
+            reader.onload = function (e) {
+              previewImage.src = e.target.result;
+
+              // Show preview container, hide initial upload area
+              uploadAreaInitial.style.display = "none";
+              previewContainer.style.display = "block";
+            };
+            reader.readAsDataURL(file);
+          }
+        }
+
+        // Remove selected image
+        removeImageBtn.addEventListener("click", function () {
+          // Clear file input
+          fileInput.value = "";
+
+          // Hide preview container, show initial upload area
+          previewContainer.style.display = "none";
+          uploadAreaInitial.style.display = "block";
+
+          // Clear status container
+          statusContainer.innerHTML = "";
+        });
+
+        // Handle form submission
+        uploadForm.addEventListener("submit", function (e) {
+          if (fileInput.files.length === 0) {
+            e.preventDefault();
+            statusContainer.innerHTML = `
+            <div class="status-indicator status-error">
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+              </svg>
+              Please select an image first
+            </div>
+          `;
+            return false;
+          }
+
+          // Show loading status
+          statusContainer.innerHTML = `
+          <div class="status-indicator status-loading">
+            <div class="spinner"></div>
+            Processing image...
+          </div>
+        `;
+
+          // Disable submit button while processing
+          submitBtn.disabled = true;
+          submitBtn.innerHTML = `
+          <div class="spinner"></div>
+          Processing...
+        `;
+
+          // Form will submit normally
+          return true;
+        });
+
+        // Handle drag and drop
+        const dropArea = document.getElementById("upload-label");
+
+        ["dragenter", "dragover", "dragleave", "drop"].forEach((eventName) => {
+          dropArea.addEventListener(eventName, preventDefaults, false);
+        });
+
+        function preventDefaults(e) {
+          e.preventDefault();
+          e.stopPropagation();
+        }
+
+        ["dragenter", "dragover"].forEach((eventName) => {
+          dropArea.addEventListener(eventName, highlight, false);
+        });
+
+        ["dragleave", "drop"].forEach((eventName) => {
+          dropArea.addEventListener(eventName, unhighlight, false);
+        });
+
+        function highlight() {
+          dropArea.style.borderColor = "#4f46e5";
+          dropArea.style.backgroundColor = "rgba(79, 70, 229, 0.1)";
+        }
+
+        function unhighlight() {
+          dropArea.style.borderColor = "";
+          dropArea.style.backgroundColor = "";
+        }
+
+        dropArea.addEventListener("drop", handleDrop, false);
+
+        function handleDrop(e) {
+          const dt = e.dataTransfer;
+          const files = dt.files;
+
+          if (files.length > 0) {
+            fileInput.files = files;
+            handleFileSelection(files[0]);
+          }
+        }
+      });
+    </script>
   </body>
 </html>
