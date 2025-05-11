@@ -66,6 +66,7 @@ Download the trained model weights file (`best.pt`) from the Google Drive link b
 
 3. **Add Your Trained Model:**
    Place the `best.pt` file (downloaded earlier) inside the `yolov5` directory.
+   also Place the `bestog.pt` file (downloaded earlier) inside the `yolov5` directory.
 
 ---
 
